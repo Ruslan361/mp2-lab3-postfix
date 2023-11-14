@@ -4,11 +4,11 @@
 
 class OperatorCloseBracket : public Operator {
 public:
-    virtual void action(TStack<Lexem*>& operands) override
+    virtual void action(TStack<Lexem*>& operands) const override
     {
-        throw std::exception("");
+        throw std::exception("miss open braket 2");
     }
-    virtual std::string GetYourself() override
+    virtual std::string GetYourself() const override
     {
         return "(";
     }
@@ -20,5 +20,5 @@ public:
         }
         return nullptr;
     }
-    virtual size_t GetPriority() { return 0; }
+    virtual size_t GetPriority() const { return 0; }
 };

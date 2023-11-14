@@ -1,33 +1,33 @@
 #pragma once
 #include <exception>
 #include "Operator.h"
-#include "Operand.h"
+#include "KnownOperand.h"
 #include "OperatorUnaryMinus.h"
 class OperatorMinus : public Operator {
 public:
-    virtual void action(TStack<Lexem*>& operands) override
+    virtual void action(TStack<Lexem*>& operands) const override
     {
         Lexem* rOperand = operands.Top();
         operands.Pop();
         Lexem* lOperand = operands.Top();
         operands.Pop();
-        if (Operand<double>* tmp = dynamic_cast<Operand<double>*>(lOperand)) {
-            Operand<double>* result = *tmp - rOperand;
+        if (KnownOperand<double>* tmp = dynamic_cast<KnownOperand<double>*>(lOperand)) {
+            Operand* result = tmp->Minus(rOperand);
             operands.Push(result);
             delete tmp;
             delete rOperand;
             return;
         }
-        if (Operand<int>* tmp = dynamic_cast<Operand<int>*>(lOperand)) {
-            Operand<int>* result = *tmp - rOperand;
+        if (KnownOperand<int>* tmp = dynamic_cast<KnownOperand<int>*>(lOperand)) {
+            Operand* result = tmp->Minus(rOperand);
             operands.Push(result);
             delete tmp;
             delete rOperand;
             return;
         }
-        throw std::exception("");
+        throw std::exception("operator - is not defined");
     }
-    virtual std::string GetYourself() override
+    virtual std::string GetYourself() const override
     {
         return "-";
     }
@@ -45,5 +45,5 @@ public:
         }
         return nullptr;
     }
-    virtual size_t GetPriority() { return 1; }
+    virtual size_t GetPriority() const { return 1; }
 };

@@ -4,5 +4,5 @@ class Operator : public Lexem
 {
 public:
     static Lexem* IsIt(std::string& current);
-    virtual size_t GetPriority() = 0;
+    virtual size_t GetPriority() const = 0;
 };

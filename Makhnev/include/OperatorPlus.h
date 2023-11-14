@@ -1,24 +1,24 @@
 #pragma once
 #include <exception>
 #include "Operator.h"
-#include "Operand.h"
+#include "KnownOperand.h"
 class OperatorPlus : public Operator {
 public:
-    virtual void action(TStack<Lexem*>& operands) override
+    virtual void action(TStack<Lexem*>& operands) const override
     {
         Lexem* rOperand = operands.Top();
         operands.Pop();
         Lexem* lOperand = operands.Top();
         operands.Pop();
-        if (Operand<double>* tmp = dynamic_cast<Operand<double>*>(lOperand)) {
-            Operand<double>* result = *tmp + rOperand;
+        if (KnownOperand<double>* tmp = dynamic_cast<KnownOperand<double>*>(lOperand)) {
+            Operand* result = tmp->Plus(rOperand);
             operands.Push(result);
             delete tmp;
             delete rOperand;
             return;
         }
-        else if (Operand<int>* tmp = dynamic_cast<Operand<int>*>(lOperand)) {
-            Operand<int>* result = *tmp + rOperand;
+        else if (KnownOperand<int>* tmp = dynamic_cast<KnownOperand<int>*>(lOperand)) {
+            Operand* result = tmp->Plus(rOperand);
             operands.Push(result);
             delete tmp;
             delete rOperand;
@@ -26,7 +26,7 @@ public:
         }
         throw std::exception("Operator + is not defined");
     }
-    virtual std::string GetYourself() override
+    virtual std::string GetYourself() const override
     {
         return "+";
     }
@@ -38,5 +38,5 @@ public:
         }
         return nullptr;
     }
-    virtual size_t GetPriority() { return 1; }
+    virtual size_t GetPriority() const override { return 1; }
 };

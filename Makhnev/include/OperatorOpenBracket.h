@@ -1,14 +1,14 @@
 #pragma once
 #include <exception>
-#include "Operator.h"
+#include "KnownOperand.h"
 
 class OperatorOpenBracket : public Operator {
 public:
-    virtual void action(TStack<Lexem*>& operands) override
+    virtual void action(TStack<Lexem*>& operands) const override
     {
-        throw std::exception("");
+        throw std::exception("miss close bracket 2");
     }
-    virtual std::string GetYourself() override
+    virtual std::string GetYourself() const override
     {
         return "(";
     }
@@ -20,5 +20,5 @@ public:
         }
         return nullptr;
     }
-    virtual size_t GetPriority() { return 0; }
+    virtual size_t GetPriority() const override { return 0; }
 };
