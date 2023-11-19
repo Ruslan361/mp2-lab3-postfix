@@ -10,20 +10,15 @@ public:
         operands.Pop();
         Lexem* lOperand = operands.Top();
         operands.Pop();
-        if (KnownOperand<double>* tmp = dynamic_cast<KnownOperand<double>*>(lOperand)) {
+        if (Operand* tmp = dynamic_cast<Operand*>(lOperand)) {
             Operand* result = tmp->Plus(rOperand);
             operands.Push(result);
             delete tmp;
             delete rOperand;
             return;
         }
-        else if (KnownOperand<int>* tmp = dynamic_cast<KnownOperand<int>*>(lOperand)) {
-            Operand* result = tmp->Plus(rOperand);
-            operands.Push(result);
-            delete tmp;
-            delete rOperand;
-            return;
-        }
+        delete lOperand;
+        delete rOperand;
         throw std::exception("Operator + is not defined");
     }
     virtual std::string GetYourself() const override

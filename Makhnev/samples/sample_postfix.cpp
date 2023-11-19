@@ -13,7 +13,13 @@ int main()
   setlocale(LC_ALL, "Russian");
   cout << "Введите арифметическое выражение: ";
   cin >> expression;
-
+  //for (size_t i = 0; i < expression.size(); i++)
+  //{
+	 // if (expression[i] == ' ') 
+	 // {	
+		//  expression.erase(i);
+	 // }
+  //}
   TPostfix<int> postfix(expression);
 
   cout << expression << endl;

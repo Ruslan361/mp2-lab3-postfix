@@ -9,18 +9,13 @@ public:
         operands.Pop();
         //Lexem* lOperand = operands.Top();
         //operands.Pop();
-        if (KnownOperand<double>* tmp = dynamic_cast<KnownOperand<double>*>(rOperand)) {
+        if (Operand* tmp = dynamic_cast<Operand*>(rOperand)) {
             Operand* result = tmp->UnaryMinus();
             operands.Push(result);
             delete tmp;
             return;
         }
-        if (KnownOperand<int>* tmp = dynamic_cast<KnownOperand<int>*>(rOperand)) {
-            Operand* result = tmp->UnaryMinus();
-            operands.Push(result);
-            delete tmp;
-            return;
-        }
+        delete rOperand;
         throw std::exception("unary minus is not defined");
     }
     virtual std::string GetYourself() const override
