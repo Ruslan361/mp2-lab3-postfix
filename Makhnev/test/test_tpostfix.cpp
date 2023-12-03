@@ -11,13 +11,13 @@ TEST(TPostfix, can_get_postfix)
 	p.ToPostfix();
 	ASSERT_NO_THROW(p.ToPostfix());
 }
-TEST(TPostfix, can_get_postfix2)
+TEST(TPostfix, can_get_postfix_brackets)
 {
 	TPostfix<int> p("((1+1))");
 	p.ToPostfix();
 	ASSERT_NO_THROW(p.ToPostfix());
 }
-TEST(TPostfix, can_get_postfix3)
+TEST(TPostfix, can_get_postfix_empty_brackets)
 {
 	TPostfix<int> p("(())");
 	p.ToPostfix();
@@ -33,31 +33,31 @@ TEST(TPostfix, cant_get_postfix_no_open_bracket)
 	TPostfix<int> p("())");
 	ASSERT_ANY_THROW(p.ToPostfix());
 }
-TEST(TPostfix, can_get_postfix4)
+TEST(TPostfix, can_get_postfix_unary_minus)
 {
 	TPostfix<int> p("-(-1+1)");
 	p.ToPostfix();
 	ASSERT_NO_THROW(p.ToPostfix());
 }
-TEST(TPostfix, can_get_postfix5)
+TEST(TPostfix, can_get_postfix_division)
 {
 	TPostfix<int> p("1/(1+1)");
 	p.ToPostfix();
 	ASSERT_NO_THROW(p.ToPostfix());
 }
-TEST(TPostfix, can_get_postfix6)
+TEST(TPostfix, can_get_postfix_division_and_multiple)
 {
 	TPostfix<int> p("1/2*3");
 	p.ToPostfix();
 	ASSERT_NO_THROW(p.ToPostfix());
 }
-TEST(TPostfix, can_get_postfix7)
+TEST(TPostfix, can_get_postfix_unary_minus_and_division)
 {
 	TPostfix<int> p("-(-1/2)");
 	p.ToPostfix();
 	ASSERT_NO_THROW(p.ToPostfix());
 }
-TEST(TPostfix, can_get_postfix8)
+TEST(TPostfix, can_get_postfix_unary_minuses)
 {
 	TPostfix<int> p("-(-(-1/2))");
 	p.ToPostfix();
@@ -75,7 +75,7 @@ TEST(TPostfix, can_calculate_postfix_unary_minus)
 	p.ToPostfix();
 	ASSERT_NO_THROW(p.Calculate());
 }
-TEST(TPostfix, can_calculate_postfix_unary_minus2)
+TEST(TPostfix, can_calculate_postfix_unary_minus_and_brackets)
 {
 	TPostfix<int> p("-(1+1)");
 	p.ToPostfix();
@@ -106,7 +106,6 @@ TEST(TPostfix, can_calculate_postfix_large)
 	p.Calculate();
 	ASSERT_NO_THROW(p.Calculate());
 }
-
 TEST(TPostfix, is_calculation_postfix_correct)
 {
 	TPostfix<int> p("1+1");
@@ -119,7 +118,7 @@ TEST(TPostfix, is_calculation_postfix_unary_minus_correct)
 	p.ToPostfix();
 	EXPECT_EQ(p.Calculate(), -1+1);
 }
-TEST(TPostfix, is_calculation_postfix_unary_minus2_correct)
+TEST(TPostfix, is_calculation_postfix_unary_minus_and_brackets_correct)
 {
 	TPostfix<int> p("-(1+1)");
 	p.ToPostfix();
